@@ -1,6 +1,4 @@
 from pages.base_page import BasePage
-from playwright.sync_api import Locator
-from typing import List
 
 
 class PromotionsPage(BasePage):
@@ -16,15 +14,12 @@ class PromotionsPage(BasePage):
 
     def apply_filter(self, filter_name):
         self.page.click(f"{self.FILTER_BUTTONS} [data-filter='{filter_name}']")
-        self.page.wait_for_load_state("networkidle")
 
-    def get_promotion_cards(self) -> List[Locator]:
+    def get_promotion_cards(self):
         return self.page.locator(self.PROMOTION_CARDS).all()
 
-    def get_card_title(self, card: Locator) -> str:
+    def get_card_title(self, card):
         return card.locator(self.PROMO_TITLE).text_content()
 
-    def get_card_read_more_button(self, card: Locator) -> Locator:
-        button = card.locator(self.READ_MORE_BUTTON)
-        button.wait_for(state="visible", timeout=1000)
-        return button
+    def get_card_read_more_button(self, card):
+        return card.locator(self.READ_MORE_BUTTON)

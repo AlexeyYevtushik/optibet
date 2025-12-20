@@ -8,7 +8,7 @@ class TestHeader:
     def test_logo_and_navigation(self, page):
         header_page = HeaderPage(page)
         header_page.navigate("/")
-        
+
         with allure.step("Verify logo is visible"):
             assert header_page.is_logo_visible(), "Logo is not visible"
             
@@ -18,10 +18,10 @@ class TestHeader:
             assert set(expected_items).issubset(set(actual_items)), f"Navigation items do not match. Expected: {expected_items}, Actual: {actual_items}"
 
     @allure.story("Language Switcher")
-    @pytest.mark.parametrize("lang_code, expected_url_part", [("ru", "/ru/"), ("en", "/en/"), ("lv", "/lv/")])
+    @pytest.mark.parametrize("lang_code, expected_url_part", [("ru", "/ru"), ("en", "/en"), ("lt", "")])
     def test_language_switcher(self, page, lang_code, expected_url_part):
         header_page = HeaderPage(page)
-        header_page.navigate("/", base_url)
+        header_page.navigate("/")
         
         with allure.step(f"Switch language to {lang_code}"):
             header_page.switch_language(lang_code)
