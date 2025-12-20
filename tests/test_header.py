@@ -15,7 +15,6 @@ class TestHeader:
         with allure.step("Verify navigation menu items"):
             expected_items = ["SPORTS", "LIVE BETTING", "CASINO", "LIVE CASINO", "OFFERS"]
             actual_items = header_page.get_navigation_menu_items()
-            # Using set for comparison to ignore order
             assert set(expected_items).issubset(set(actual_items)), f"Navigation items do not match. Expected: {expected_items}, Actual: {actual_items}"
 
     @allure.story("Language Switcher")

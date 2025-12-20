@@ -16,7 +16,6 @@ class PromotionsPage(BasePage):
 
     def apply_filter(self, filter_name):
         self.page.click(f"{self.FILTER_BUTTONS} [data-filter='{filter_name}']")
-        # It's a good practice to wait for the content to update after filtering
         self.page.wait_for_load_state("networkidle")
 
     def get_promotion_cards(self) -> List[Locator]:
@@ -26,7 +25,6 @@ class PromotionsPage(BasePage):
         return card.locator(self.PROMO_TITLE).text_content()
 
     def get_card_read_more_button(self, card: Locator) -> Locator:
-        # This makes the check more robust by ensuring the button exists within the card
         button = card.locator(self.READ_MORE_BUTTON)
-        button.wait_for(state="visible", timeout=1000) # Wait up to 1s for visibility
+        button.wait_for(state="visible", timeout=1000)
         return button

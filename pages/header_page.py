@@ -3,8 +3,8 @@ from pages.base_page import BasePage
 
 class HeaderPage(BasePage):
     LOGO = "a.logo"
-    NAVIGATION_MENU = "[data-test-id='main-navigation']"  # Assuming a more stable selector
-    LANGUAGE_SWITCHER = ".language-switcher"  # Assuming a class for the language switcher
+    NAVIGATION_MENU = "[data-test-id='main-navigation']"
+    LANGUAGE_SWITCHER = ".language-switcher"
 
 
     def is_logo_visible(self):

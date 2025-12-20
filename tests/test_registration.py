@@ -6,9 +6,6 @@ from pages.registration_page import RegistrationPage
 class TestRegistration:
 
     def setup_method(self, method):
-        """
-        Using a setup method to avoid repeating the navigation for each test.
-        """
         self.email_for_test = "testuser@example.com"
 
     @allure.story("Negative Scenarios")

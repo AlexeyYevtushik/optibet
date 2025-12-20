@@ -22,7 +22,5 @@ class TestPromotions:
                     for card in cards:
                         assert promotions_page.get_card_title(card), "Card title is missing"
                         assert promotions_page.get_card_read_more_button(card), "Read more button is missing"
-                else:
-                    # It's okay if some filters have no promotions, but we should note it.
-                    print(f"No promotions found for filter '{f}'")
+
 
