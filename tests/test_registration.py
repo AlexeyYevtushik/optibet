@@ -15,23 +15,21 @@ class TestRegistration:
         header_page.navigate("/")
         header_page.go_to_register_page()
         registration_page = RegistrationPage(page)
-        registration_page.navigate_to_registration()
-
+       
         with allure.step("Verify presence of main fields"):
             assert registration_page.is_email_field_visible(), "Email field is not visible"
             assert registration_page.is_password_field_visible(), "Password field is not visible"
-            assert registration_page.is_confirm_password_field_visible(), "Confirm Password field is not visible"
             assert registration_page.is_submit_button_visible(), "Submit button is not visible"
-
 
         with allure.step("Fill form with invalid email"):
             registration_page.fill_email("test_without_at.com")
             registration_page.fill_password("ValidPassword123")
-            registration_page.fill_confirm_password("ValidPassword123")
-            registration_page.submit()
+            assert registration_page.check_submit_is_active() == False, "Submit button should be inactive with invalid email"
+            # registration_page.check_promotions_checkbox()
+            # assert registration_page.check_submit_is_active() == True, "Submit button should be active after checking checkboxes"
 
         with allure.step("Verify email error message"):
-            assert "invalid email" in registration_page.get_email_error().lower()
+            assert "įvesk galiojantį el. pašto adresą" in registration_page.get_email_error().lower()
 
     @pytest.mark.parametrize("password, error_message", [
         ("short", "password is too short"),

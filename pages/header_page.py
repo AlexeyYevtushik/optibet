@@ -8,7 +8,7 @@ class HeaderPage(BasePage):
     LANGUAGE_SWITCHER = f"//div[contains(@class, 'language-menu____')]"
     ACTIVE_LANGUAGE = "//*[contains(@class,'language-menu__label___')]"
     LOGIN = "//*[@data-role='loginHeaderButton']"
-    REGISTER = "//*[@data-role='registerHeaderButton']"
+    REGISTER = "//*[@data-role='signupHeaderButton']"
 
 
     def is_logo_visible(self):
