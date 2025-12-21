@@ -1,13 +1,10 @@
 from pages.base_page import BasePage
 
 class LoginPage(BasePage):
-    USERNAME_INPUT = "#username"
-    PASSWORD_INPUT = "#password"
+    USERNAME_INPUT = "//*[@data-role='loginEmailInput']"
+    PASSWORD_INPUT = "//*[@name='password']"
     LOGIN_BUTTON = "button[type='submit']"
-    ERROR_MESSAGE = ".error-message"
-
-    def navigate_to_login(self):
-        self.navigate("/en/login")
+    ERROR_MESSAGE = "//*[@data-role='validationError']"
 
     def fill_username(self, username):
         self.page.fill(self.USERNAME_INPUT, username)

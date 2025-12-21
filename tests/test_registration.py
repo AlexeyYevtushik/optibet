@@ -1,5 +1,6 @@
 import allure
 import pytest
+from pages.header_page import HeaderPage
 from pages.registration_page import RegistrationPage
 
 @allure.feature("Registration")
@@ -10,6 +11,9 @@ class TestRegistration:
 
     @allure.story("Negative Scenarios")
     def test_invalid_email(self, page):
+        header_page = HeaderPage(page)
+        header_page.navigate("/")
+        header_page.go_to_register_page()
         registration_page = RegistrationPage(page)
         registration_page.navigate_to_registration()
 
