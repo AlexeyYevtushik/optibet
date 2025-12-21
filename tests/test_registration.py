@@ -50,11 +50,14 @@ class TestRegistration:
             assert error_message in registration_page.get_password_error().lower()
 
     def test_required_field_empty(self, page):
+        header_page = HeaderPage(page)
+        header_page.navigate("/")
+        header_page.go_to_register_page()
         registration_page = RegistrationPage(page)
-        registration_page.navigate_to_registration()
 
-        with allure.step("Submit form with empty required field"):
-            registration_page.submit()
+        with allure.step("Click on pasword field"):
+            registration_page.fill_email("")
+            registration_page.fill_password("SomePassword123")
 
         with allure.step("Verify email error message for required field"):
-            assert "is required" in registration_page.get_email_error().lower()
+            assert "privaloma nurodyti teisingą el. pašto adresą" in registration_page.get_email_error().lower()
