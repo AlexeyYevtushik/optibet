@@ -38,16 +38,23 @@ class TestRegistration:
         ("NoNumber", "password must contain at least one number"),
     ])
     def test_weak_password(self, page, password, error_message):
+        header_page = HeaderPage(page)
+        header_page.navigate("/")
+        header_page.go_to_register_page()
         registration_page = RegistrationPage(page)
-        registration_page.navigate_to_registration()
-
+        
         with allure.step(f"Fill form with weak password: {password}"):
             registration_page.fill_email(self.email_for_test)
             registration_page.fill_password(password)
-            registration_page.submit()
 
         with allure.step("Verify password error message"):
             assert error_message in registration_page.get_password_error().lower()
+
+        with allure.step(f"Verify validation rule for '{error_message}' is highlighted as invalid"):
+            rule_color = registration_page.get_password_rule_background_color(error_message)
+            # Assert that the rule color is not the 'valid' color (e.g., green).
+            # You may need to adjust 'rgb(18, 156, 74)' to the actual color your app uses for a *valid* rule.
+            assert "rgb(18, 156, 74)" not in rule_color, f"Rule '{error_message}' should be shown as invalid, but it is not."
 
     def test_required_field_empty(self, page):
         header_page = HeaderPage(page)
