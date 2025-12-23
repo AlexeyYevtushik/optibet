@@ -15,11 +15,10 @@ This project contains automated UI tests for the Optibet website.
 *   **Header:**
     *   Verified that the logo is visible.
     *   Verified the presence of main navigation menu items.
-    *   Verified language switching functionality (RU, EN, LV).
+    *   Verified language switching functionality (RU, EN, LT).
 *   **Promotions:**
     *   Verified that the promotions page loads and displays promotion cards.
     *   Verified filtering functionality for different promotion categories.
-    *   Verified that each promotion card has a title and a "Read More" button.
 *   **Registration:**
     *   Negative scenario with an invalid email.
     *   Negative scenarios with weak passwords (parametrization used).
@@ -68,6 +67,14 @@ pytest --headless
 ```bash
 pytest --base_url=https://www.another-optibet.com/
 ```
+**Run on specific browsers:**
+By default, tests run on Chromium. You can specify one or multiple browsers using the --browser flag (options: chromium, firefox, webkit)
+ 
+ Run on multiple browsers (will run each test for each browser): 
+ 
+ ```bash
+ pytest --browser chromium --browser firefox --browser webkit
+ ```
 
 ## How to Run Tests via Docker
 
@@ -104,7 +111,5 @@ The selected scenarios cover the most critical, user-facing functionalities of t
 Given more time, I would add:
 
 *   **More comprehensive validation:** Deeper checks on the content of pages and elements.
-*   **Positive scenarios:** Testing successful registration and login (with dummy/test accounts if possible).
-*   **Cross-browser testing:** Running the tests on different browsers (Firefox, WebKit).
 *   **CI/CD Integration:** Setting up a pipeline (e.g., GitHub Actions) to run tests automatically on every code change.
-*   **Data-driven tests:** Using external data files (e.g., CSV, JSON) to drive more test variations.
+
