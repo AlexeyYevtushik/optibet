@@ -103,13 +103,3 @@ By default, tests run on Chromium. You can specify one or multiple browsers usin
     allure generate allure-results --clean -o allure-report
     ```
     The report will be generated in the `allure-report` folder. To view it locally, run `allure open allure-report`.
-
-## Test Rationale
-
-The selected scenarios cover the most critical, user-facing functionalities of the website: navigation, information discovery (promotions), and core user actions (registration, login). These are high-traffic areas where bugs would have the most impact.
-
-Given more time, I would add:
-
-*   **More comprehensive validation:** Deeper checks on the content of pages and elements.
-*   **CI/CD Integration:** Setting up a pipeline (e.g., GitHub Actions) to run tests automatically on every code change.
-
