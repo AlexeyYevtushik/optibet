@@ -2,24 +2,25 @@ from pages.base_page import BasePage
 
 
 class RegistrationPage(BasePage):
-    EMAIL_INPUT = "#email"
-    PASSWORD_INPUT = "#password"
-    CONFIRM_PASSWORD_INPUT = "#confirm_password"
+    EMAIL_INPUT = "//*[@data-role='signupEmail']"
+    PASSWORD_INPUT = "//*[@data-role='signupPassword']"
     SUBMIT_BUTTON = "button[type='submit']"
-    EMAIL_ERROR_MESSAGE = ".email-error-message"
-    PASSWORD_ERROR_MESSAGE = ".password-error-message"
+    EMAIL_ERROR_MESSAGE = "//*[@data-role='signupEmail']/../../*[@data-role = 'validationError']"
+    CHECKBOX_TERMS = "//*[@data-role='tnc-checkbox-input']/.."
+    CHECKBOX_PRIVACY = "//*[@data-role='playerAgreement-input']/.."
+    CHECKBOX_PROMOTIONS = "//*[@data-role='promotions-checkbox-input']/.."
+    VALIDATION_RULE = '//li[@data-role="validation-rule"]'
 
     def navigate_to_registration(self):
         self.navigate("/en/register")
 
     def fill_email(self, email):
+        self.wait_for_selector(self.EMAIL_INPUT)
         self.page.fill(self.EMAIL_INPUT, email)
 
     def fill_password(self, password):
+        self.wait_for_selector(self.PASSWORD_INPUT)
         self.page.fill(self.PASSWORD_INPUT, password)
-
-    def fill_confirm_password(self, password):
-        self.page.fill(self.CONFIRM_PASSWORD_INPUT, password)
 
     def submit(self):
         self.page.click(self.SUBMIT_BUTTON)
@@ -40,8 +41,27 @@ class RegistrationPage(BasePage):
     def is_password_field_visible(self):
         return self.is_visible(self.PASSWORD_INPUT)
 
-    def is_confirm_password_field_visible(self):
-        return self.is_visible(self.CONFIRM_PASSWORD_INPUT)
-
     def is_submit_button_visible(self):
         return self.is_visible(self.SUBMIT_BUTTON)
+    
+    def check_checkboxes(self):
+        self.page.check(self.CHECKBOX_TERMS)
+        self.page.check(self.CHECKBOX_PRIVACY)
+        self.page.check(self.CHECKBOX_PROMOTIONS)
+
+    def check_terms_checkbox(self):
+        self.page.check(self.CHECKBOX_TERMS)
+    
+    def check_privacy_checkbox(self):
+        self.page.check(self.CHECKBOX_PRIVACY)
+    
+    def check_promotions_checkbox(self):
+        self.page.check(self.CHECKBOX_PROMOTIONS)
+
+    def check_submit_is_active(self):
+        return self.page.locator(self.SUBMIT_BUTTON).is_enabled()
+
+    def get_valid_validation_rules_count(self):
+        return self.page.locator(self.VALIDATION_RULE).evaluate_all(
+            "elements => elements.filter(e => getComputedStyle(e).backgroundColor.replace(/\\s/g, '') === 'rgb(19,193,111)').length"
+        )

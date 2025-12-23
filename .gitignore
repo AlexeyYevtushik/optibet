@@ -1,3 +1,11 @@
-venv/
 __pycache__/
 *.pyc
+allure-results/
+.screenshots/
+*.png
+*.log
+logs/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/

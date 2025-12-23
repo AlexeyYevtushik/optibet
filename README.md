@@ -90,6 +90,13 @@ pytest --base_url=https://www.another-optibet.com/
     ```
     This will open the report in your web browser.
 
+4.  **Generate Static Report:**
+    To generate a static HTML report folder (e.g., for hosting or CI artifacts):
+    ```bash
+    allure generate allure-results --clean -o allure-report
+    ```
+    The report will be generated in the `allure-report` folder. To view it locally, run `allure open allure-report`.
+
 ## Test Rationale
 
 The selected scenarios cover the most critical, user-facing functionalities of the website: navigation, information discovery (promotions), and core user actions (registration, login). These are high-traffic areas where bugs would have the most impact.

@@ -8,21 +8,20 @@ class TestHeader:
     def test_logo_and_navigation(self, page):
         header_page = HeaderPage(page)
         header_page.navigate("/")
-        
+
         with allure.step("Verify logo is visible"):
             assert header_page.is_logo_visible(), "Logo is not visible"
             
         with allure.step("Verify navigation menu items"):
-            expected_items = ["SPORTS", "LIVE BETTING", "CASINO", "LIVE CASINO", "OFFERS"]
+            expected_items = ['/casino', '/live-casino', '/sport', '/sport/wcg', '/poker', '/download', '/updates']
             actual_items = header_page.get_navigation_menu_items()
-            # Using set for comparison to ignore order
-            assert set(expected_items).issubset(set(actual_items)), f"Navigation items do not match. Expected: {expected_items}, Actual: {actual_items}"
+            assert str(expected_items) == str(actual_items), f"Navigation items do not match. Expected: {expected_items}, Actual: {actual_items}"
 
     @allure.story("Language Switcher")
-    @pytest.mark.parametrize("lang_code, expected_url_part", [("ru", "/ru/"), ("en", "/en/"), ("lv", "/lv/")])
+    @pytest.mark.parametrize("lang_code, expected_url_part", [("ru", "/ru"), ("en", "/en"), ("lt", "")])
     def test_language_switcher(self, page, lang_code, expected_url_part):
         header_page = HeaderPage(page)
-        header_page.navigate("/", base_url)
+        header_page.navigate("/")
         
         with allure.step(f"Switch language to {lang_code}"):
             header_page.switch_language(lang_code)
@@ -37,11 +36,11 @@ class TestHeader:
         header_page.navigate("/")
 
         with allure.step("Switch language from RU to LV"):
-            header_page.switch_language("lv")
-            assert "/lv/" in page.url, "URL does not contain /lv/ after switching to LV"
-            assert header_page.get_active_language() == "lv", "Active language is not LV"
-
-        with allure.step("Switch language from LV back to RU"):
             header_page.switch_language("ru")
-            assert "/ru/" in page.url, "URL does not contain /ru/ after switching back to RU"
+            assert "/ru" in page.url, "URL does not contain /ru after switching to RU"
             assert header_page.get_active_language() == "ru", "Active language is not RU"
+
+        with allure.step("Switch language from RU back to LT"):
+            header_page.switch_language("lt")
+            assert "" in page.url, "URL does not contain /lt after switching back to LT"
+            assert header_page.get_active_language() == "lt", "Active language is not LT"

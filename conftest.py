@@ -1,23 +1,14 @@
 import pytest
-from playwright.sync_api import sync_playwright
 import allure
 import os
 
 def pytest_addoption(parser):
-    parser.addoption("--base_url", action="store", default="https://www.optibet.lv/", help="base URL for the application under test")
-    parser.addoption("--headless", action="store_true", default=False, help="run tests in headless mode")
-
-@pytest.fixture(scope="session")
-def browser(request):
-    headless = request.config.getoption("--headless")
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=headless)
-        yield browser
-        browser.close()
+    parser.addoption("--base_url", action="store", help="base URL for the application under test")
+    parser.addini("base_url", help="base URL for the application under test", default="https://www.optibet.lt/")
 
 @pytest.fixture
 def page(browser, request):
-    base_url = request.config.getoption("--base_url")
+    base_url = request.config.getoption("--base_url") or request.config.getini("base_url")
     page = browser.new_page(base_url=base_url)
     yield page
     page.close()
