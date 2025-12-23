@@ -31,13 +31,9 @@ class TestRegistration:
         with allure.step("Verify email error message"):
             assert "įvesk galiojantį el. pašto adresą" in registration_page.get_email_error().lower()
 
-    @pytest.mark.parametrize("password, error_message", [
-        ("short", "password is too short"),
-        ("nouppercase1", "password must contain at least one uppercase letter"),
-        ("NOLOWERCASE1", "password must contain at least one lowercase letter"),
-        ("NoNumber", "password must contain at least one number"),
-    ])
-    def test_weak_password(self, page, password, error_message):
+    @pytest.mark.parametrize("password, highlighted_elements_number", [
+        ("short", "3"),("testtest", "4"), ("1Aa", "5")])
+    def test_weak_password(self, page, password, highlighted_elements_number):
         header_page = HeaderPage(page)
         header_page.navigate("/")
         header_page.go_to_register_page()
@@ -47,14 +43,9 @@ class TestRegistration:
             registration_page.fill_email(self.email_for_test)
             registration_page.fill_password(password)
 
-        with allure.step("Verify password error message"):
-            assert error_message in registration_page.get_password_error().lower()
-
-        with allure.step(f"Verify validation rule for '{error_message}' is highlighted as invalid"):
-            rule_color = registration_page.get_password_rule_background_color(error_message)
-            # Assert that the rule color is not the 'valid' color (e.g., green).
-            # You may need to adjust 'rgb(18, 156, 74)' to the actual color your app uses for a *valid* rule.
-            assert "rgb(18, 156, 74)" not in rule_color, f"Rule '{error_message}' should be shown as invalid, but it is not."
+        with allure.step(f"Verify highlighted validation buttons count:'{highlighted_elements_number}'"):
+            buttons_highlighted = registration_page.get_valid_validation_rules_count()
+            assert int(highlighted_elements_number) == int(buttons_highlighted), f"Highlighted '{buttons_highlighted}, expected '{highlighted_elements_number}'"
 
     def test_required_field_empty(self, page):
         header_page = HeaderPage(page)

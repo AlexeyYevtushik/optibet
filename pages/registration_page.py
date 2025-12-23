@@ -9,6 +9,7 @@ class RegistrationPage(BasePage):
     CHECKBOX_TERMS = "//*[@data-role='tnc-checkbox-input']/.."
     CHECKBOX_PRIVACY = "//*[@data-role='playerAgreement-input']/.."
     CHECKBOX_PROMOTIONS = "//*[@data-role='promotions-checkbox-input']/.."
+    VALIDATION_RULE = '//li[@data-role="validation-rule"]'
 
     def navigate_to_registration(self):
         self.navigate("/en/register")
@@ -56,4 +57,9 @@ class RegistrationPage(BasePage):
         self.page.check(self.CHECKBOX_PROMOTIONS)
 
     def check_submit_is_active(self):
-        return self.page.locator(self.SUBMIT_BUTTON).is_enabled()   
+        return self.page.locator(self.SUBMIT_BUTTON).is_enabled()
+
+    def get_valid_validation_rules_count(self):
+        return self.page.locator(self.VALIDATION_RULE).evaluate_all(
+            "elements => elements.filter(e => getComputedStyle(e).backgroundColor.replace(/\\s/g, '') === 'rgb(19,193,111)').length"
+        )

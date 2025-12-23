@@ -4,7 +4,7 @@ import os
 
 def pytest_addoption(parser):
     parser.addoption("--base_url", action="store", help="base URL for the application under test")
-    parser.addini("base_url", help="base URL for the application under test", default="https://www.optibet.lv/")
+    parser.addini("base_url", help="base URL for the application under test", default="https://www.optibet.lt/")
 
 @pytest.fixture
 def page(browser, request):
