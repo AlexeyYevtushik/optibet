@@ -6,7 +6,8 @@ from pages.registration_page import RegistrationPage
 @allure.feature("Registration")
 class TestRegistration:
 
-    def setup_method(self, method):
+    @pytest.fixture(autouse=True)
+    def setup_data(self):
         self.email_for_test = "testuser@example.com"
 
     @allure.story("Negative Scenarios")

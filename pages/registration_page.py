@@ -15,9 +15,11 @@ class RegistrationPage(BasePage):
         self.navigate("/en/register")
 
     def fill_email(self, email):
+        self.wait_for_selector(self.EMAIL_INPUT)
         self.page.fill(self.EMAIL_INPUT, email)
 
     def fill_password(self, password):
+        self.wait_for_selector(self.PASSWORD_INPUT)
         self.page.fill(self.PASSWORD_INPUT, password)
 
     def submit(self):

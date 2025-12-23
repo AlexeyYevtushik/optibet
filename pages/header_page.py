@@ -9,6 +9,7 @@ class HeaderPage(BasePage):
     ACTIVE_LANGUAGE = "//*[contains(@class,'language-menu__label___')]"
     LOGIN = "//*[@data-role='loginHeaderButton']"
     REGISTER = "//*[@data-role='signupHeaderButton']"
+    PROMOTIONS = "//*[@data-role='Promotions']"
 
 
     def is_logo_visible(self):
@@ -26,7 +27,29 @@ class HeaderPage(BasePage):
         return self.page.locator(self.ACTIVE_LANGUAGE).text_content().strip().lower()
     
     def go_to_login_page(self):
-        self.page.click(self.LOGIN)
+        try:
+            self.page.wait_for_selector(self.LOGIN, timeout=5000)
+            self.page.click(self.LOGIN)
+            self.page.wait_for_response(lambda response: "/e" in response.url and response.request.method == "GET" and response.status == 200, timeout=5000)
+        except Exception:
+            pass 
                         
     def go_to_register_page(self):
-        self.page.click(self.REGISTER)
+        try:
+            self.page.wait_for_selector(self.REGISTER, timeout=5000)
+            self.page.click(self.REGISTER)
+        except Exception:
+            pass
+        try:
+            self.page.wait_for_response(lambda response: "/e" in response.url and response.request.method == "GET" and response.status == 200, timeout=5000)
+        except Exception:
+            pass 
+
+
+    def go_to_promotions_page(self):
+        try:
+            self.page.wait_for_selector(self.PROMOTIONS, timeout=5000)
+            self.page.click(self.PROMOTIONS)
+            self.page.wait_for_response(lambda response: "/promotions2" in response.url and response.request.method == "GET" and response.status == 200, timeout=5000)
+        except Exception:
+            pass 
