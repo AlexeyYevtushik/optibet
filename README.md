@@ -59,7 +59,13 @@ pytest
 **Run tests in headless mode:**
 
 ```bash
-pytest --headless
+pytest
+```
+
+and
+
+```bash
+pytest --headed
 ```
 
 **Specify a different base URL:**
@@ -83,9 +89,14 @@ By default, tests run on Chromium. You can specify one or multiple browsers usin
     docker build -t optibet-tests .
     ```
 2.  Run the tests inside the container:
-    ```bash
-    docker run --rm -v $(pwd)/allure-results:/app/allure-results optibet-tests
-    ```
+    *   **Linux/Mac (Bash):**
+        ```bash
+        docker run --rm -v "$(pwd)/allure-results:/app/allure-results" optibet-tests
+        ```
+    *   **Windows (PowerShell):**
+        ```powershell
+        docker run --rm -v "${PWD}/allure-results:/app/allure-results" optibet-tests
+        ```
 
 ## How to Generate/View Allure Report
 
