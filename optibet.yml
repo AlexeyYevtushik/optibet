@@ -1,0 +1,32 @@
+name: Optibet Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  docker-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build Docker Image
+      run: docker build -t optibet-tests .
+      
+    - name: Run Tests in Docker
+      # We mount the host directory to capture allure-results
+      run: |
+        mkdir -p allure-results
+        docker run --rm -v ${{ github.workspace }}/allure-results:/app/allure-results optibet-tests
+      
+    - name: Upload Allure Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-results
+        path: allure-results
+        retention-days: 30
