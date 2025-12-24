@@ -14,17 +14,15 @@ class BasePage:
             pass
         
         try:
-        # Handle the LV -> LT redirect link if it appears
             self.page.wait_for_selector("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll", state="visible", timeout=5000)
         except Exception:
             pass 
-        # Handle Cookiebot consent dialog if it appears
         try:
             cookie_button = self.page.locator("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll")
             cookie_button.wait_for(state="visible", timeout=5000)
             cookie_button.click()
         except Exception:
-            pass # Cookie banner didn't appear, continue
+            pass 
 
 
         # lt_link = self.page.locator('a[href="https://www.optibet.lt"]')

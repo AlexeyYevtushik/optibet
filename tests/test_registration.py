@@ -26,8 +26,6 @@ class TestRegistration:
             registration_page.fill_email("test_without_at.com")
             registration_page.fill_password("ValidPassword123")
             assert registration_page.check_submit_is_active() == False, "Submit button should be inactive with invalid email"
-            # registration_page.check_promotions_checkbox()
-            # assert registration_page.check_submit_is_active() == True, "Submit button should be active after checking checkboxes"
 
         with allure.step("Verify email error message"):
             assert "įvesk galiojantį el. pašto adresą" in registration_page.get_email_error().lower()
